@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 export default function DefaultNavbar() {
   const location = useLocation();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   return (
     <nav className="navbar bg-base-300">
       <div className="navbar-start">
@@ -61,15 +61,15 @@ export default function DefaultNavbar() {
         <div className="dropdown dropdown-end ">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <img src="https://www.gravatar.com/avatar/4673e7b84bc6ea92c9ed70d90a452dc0?s=160&d=mp&r=PG" />
             </div>
           </label>
           <ul
             tabIndex={0}
-            className="mt-3 z-[1] p-2 shadow menu dropdown-content bg-base-300 rounded-box"
+            className="mt-3 z-[1] p-2 shadow menu dropdown-content bg-base-300 rounded-box w-40"
           >
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile">Profile ({user?.firstName})</Link>
             </li>
             <li>
               <a>Settings</a>

@@ -5,12 +5,13 @@ const axios = _axios.create({
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 });
-// axios.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.response.status === 401) {
-//       window.location.href = '/auth/login';
-//     }
-//   }
-// );
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem('auth-user');
+      window.location.href = '/auth/login';
+    }
+  }
+);
 export default axios;

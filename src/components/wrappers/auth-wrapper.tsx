@@ -1,17 +1,20 @@
-import { LoginParams, useLogin, useLogout } from 'lib/api/auth.api';
+import { LoginParams, useLogin, useLogout, useProfile } from 'lib/api/auth.api';
 import useLocalState from 'lib/hooks/useLocalState';
+// import useLocalState from 'lib/hooks/useLocalState';
 import { User } from 'lib/types';
 import { createContext, useContext, ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 interface InitialValues {
   user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   signin: (params: LoginParams) => void;
   logout: () => void;
 }
 
 const initialValues: InitialValues = {
   user: null,
+  setUser: () => {},
   signin: () => {},
   logout: () => {},
 };
@@ -27,6 +30,8 @@ export const AuthWrapper = (props: IProps) => {
   const [user, setUser] = useLocalState<InitialValues['user']>('auth-user', null);
   const loginMutation = useLogin(setUser);
   const logoutMutation = useLogout(setUser);
+  useProfile(setUser);
+
   function signin(params: LoginParams) {
     loginMutation.mutate(params);
   }
@@ -35,13 +40,13 @@ export const AuthWrapper = (props: IProps) => {
     logoutMutation.mutate();
   }
 
-  const value = { signin, logout, user };
+  const value = { signin, logout, user, setUser };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export function RequireAuth({ children }: { children: JSX.Element }) {
-  const user = useUser();
+  const { user } = useAuth();
   const location = useLocation();
 
   if (!user) {

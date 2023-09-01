@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Res, User } from 'lib/types';
 import axios from 'lib/utils/axios';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -19,6 +19,14 @@ async function login(params: LoginParams) {
 async function logout() {
   try {
     const { data } = await axios.post<Res<boolean>>('auth/logout');
+    return data;
+  } catch (error) {
+    console.log('error', error);
+  }
+}
+async function getProfile() {
+  try {
+    const { data } = await axios.get<Res<User>>('auth/profile');
     return data;
   } catch (error) {
     console.log('error', error);
@@ -54,4 +62,15 @@ export const useLogout = (setUser: React.Dispatch<React.SetStateAction<User | nu
     },
   });
   return mutation;
+};
+
+export const useProfile = (setUser: React.Dispatch<React.SetStateAction<User | null>>) => {
+  const query = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile,
+    onSuccess: (data) => {
+      setUser(data?.data ?? null);
+    },
+  });
+  return query;
 };
