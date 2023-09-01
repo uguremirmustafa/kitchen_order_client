@@ -10,7 +10,9 @@ axios.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       localStorage.removeItem('auth-user');
-      window.location.href = '/auth/login';
+      if (window.location.pathname !== '/auth/login') {
+        window.location.href = '/auth/login';
+      }
     }
   }
 );
