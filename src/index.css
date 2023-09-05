@@ -7,3 +7,29 @@
     @apply text-sm focus:text-red-400;
   }
 }
+.rs__control {
+  @apply !bg-base-100 !border-primary border-2 !rounded-[8px] h-12 !overflow-hidden;
+  color: white !important;
+}
+.rs__control--is-focused {
+  box-shadow: none !important;
+}
+.rs__value-container {
+  @apply !text-neutral-content;
+}
+
+.rs__indicators {
+  @apply bg-base-100;
+}
+.rs__indicator-separator {
+  @apply hidden;
+}
+.rs__single-value {
+  @apply !text-neutral-content;
+}
+.rs__input-container {
+  @apply !text-neutral-content;
+}
+.rs__menu {
+  @apply !bg-base-100;
+}

@@ -1,3 +1,4 @@
+import { Route, Routes } from 'react-router-dom';
 import AuthLayout from 'components/ui/layout/auth-layout';
 import MainLayout from 'components/ui/layout/main-layout';
 import { AuthWrapper, RequireAuth } from 'components/wrappers/auth-wrapper';
@@ -10,7 +11,9 @@ import FallbackPage from 'pages/fallback/fallback-page';
 import HomePage from 'pages/home/home-page';
 import BrandsPage from 'pages/ingredients/brands-page';
 import IngredientsPage from 'pages/ingredients/ingredients-page';
-import { Route, Routes } from 'react-router-dom';
+import RecipesPage from 'pages/recipes/recipes-page';
+import { Page } from 'lib/types';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 function App() {
   return (
@@ -19,38 +22,13 @@ function App() {
         <ThemeProvider defaultTheme="dark">
           <Routes>
             <Route path="/" element={<MainLayout />}>
-              <Route
-                index
-                element={
-                  <RequireAuth>
-                    <HomePage />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="brands"
-                element={
-                  <RequireAuth>
-                    <BrandsPage />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="ingredients"
-                element={
-                  <RequireAuth>
-                    <IngredientsPage />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="profile"
-                element={
-                  <RequireAuth>
-                    <ProfilePage />
-                  </RequireAuth>
-                }
-              />
+              {PAGES.map((p) => (
+                <Route
+                  key={p.path}
+                  path={p.path}
+                  element={<RequireAuth>{p.component}</RequireAuth>}
+                />
+              ))}
               <Route path="*" element={<FallbackPage />} />
             </Route>
             <Route path="/auth" element={<AuthLayout />}>
@@ -60,8 +38,17 @@ function App() {
           </Routes>
         </ThemeProvider>
       </AuthWrapper>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryWrapper>
   );
 }
 
 export default App;
+
+const PAGES: Page[] = [
+  { path: '/', component: <HomePage /> },
+  { path: 'ingredients', component: <IngredientsPage /> },
+  { path: 'recipes', component: <RecipesPage /> },
+  { path: 'brands', component: <BrandsPage /> },
+  { path: 'profile', component: <ProfilePage /> },
+];
