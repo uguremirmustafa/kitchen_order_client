@@ -6,4 +6,4 @@ declare global {
 
 type Modals = Record<ModalId, HTMLDialogElement>;
 
-export type ModalId = 'recipe_form_modal' | 'messi';
+export type ModalId = 'recipe_form_modal' | 'ingredient_form_modal';

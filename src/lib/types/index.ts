@@ -41,6 +41,7 @@ export type RecipeWithIngredients = {
 
 export interface Ingredient {
   brandName: string;
+  brandId: number;
   ingredientId: number;
   ingredientName: string;
 }

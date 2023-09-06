@@ -3,8 +3,8 @@ import { BrandWithName, Res } from 'lib/types';
 import axios from 'lib/utils/axios';
 
 async function getBrandNames() {
-  const res = await axios<Res<BrandWithName>>('brand');
-  return res.data;
+  const res = await axios<Res<BrandWithName[]>>('brand');
+  return res.data.data ?? [];
 }
 
 export const useBrandNames = () => {

@@ -21,7 +21,14 @@ const SelectField = forwardRef<any, SelectFieldProps>((props, ref) => {
           {label}
         </label>
       ) : null}
-      <Select {...nativeProps} ref={ref} name={name} classNamePrefix="rs" />
+      <Select
+        {...nativeProps}
+        menuPortalTarget={document.body}
+        styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+        ref={ref}
+        name={name}
+        classNamePrefix="rs"
+      />
     </FormControl>
   );
 });
