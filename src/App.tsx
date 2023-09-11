@@ -20,6 +20,8 @@ function App() {
     <QueryWrapper>
       <AuthWrapper>
         <ThemeProvider defaultTheme="dark">
+
+
           <Routes>
             <Route path="/" element={<MainLayout />}>
               {PAGES.map((p) => (

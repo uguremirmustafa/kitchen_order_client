@@ -22,7 +22,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, IProps>((props, ref) => {
         ref={ref}
         id={name}
         rows={rows}
-        className="textarea textarea-bordered textarea-primary w-full"
+        className="textarea textarea-bordered border-2 textarea-primary w-full"
       />
       {error ? <span>{error.message}</span> : ''}
     </FormControl>

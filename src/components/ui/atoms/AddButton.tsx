@@ -12,7 +12,9 @@ function AddButton(props: IProps) {
     <button
       {...nativeProps}
       type="button"
-      className={`btn btn-primary ${outline && 'btn-outline'} flex ${nativeProps.className}`}
+      className={`btn btn-primary border-2 ${outline && 'btn-outline'} flex ${
+        nativeProps.className
+      }`}
     >
       {children ? <span className="mr-2">{children}</span> : null}
       <FaPlus />

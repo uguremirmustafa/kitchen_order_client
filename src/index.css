@@ -3,16 +3,20 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    @apply font-semibold;
+  }
   label {
     @apply text-sm focus:text-red-400;
   }
 }
 .rs__control {
-  @apply !bg-base-100 !border-primary border-2 !rounded-[8px] h-12 !overflow-hidden;
+  @apply !bg-base-100 !border-primary !border-2 !rounded-[8px] h-12 !overflow-hidden;
   color: white !important;
 }
 .rs__control--is-focused {
   box-shadow: none !important;
+  @apply !border-2;
 }
 .rs__value-container {
   @apply !text-neutral-content;

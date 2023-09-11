@@ -3,15 +3,18 @@ import { FaTimes } from 'react-icons/fa';
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
+  outline?: boolean;
 }
 
-function RemoveButton(props: IProps) {
-  const { children = '', ...nativeProps } = props;
+function CancelButton(props: IProps) {
+  const { children = 'Cancel', outline = true, ...nativeProps } = props;
   return (
     <button
-      type="button"
       {...nativeProps}
-      className={`btn btn-primary border-2 btn-outline ${nativeProps.className}`}
+      type="button"
+      className={`btn btn-danger border-2 ${outline && 'btn-outline'} flex ${
+        nativeProps.className
+      }`}
     >
       {children ? <span className="mr-2">{children}</span> : null}
       <FaTimes />
@@ -19,4 +22,4 @@ function RemoveButton(props: IProps) {
   );
 }
 
-export default RemoveButton;
+export default CancelButton;

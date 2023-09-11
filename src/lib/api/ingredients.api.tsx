@@ -39,6 +39,11 @@ export async function saveIngredient({
   return res.data.data;
 }
 
+export async function deleteIngredient(id: Ingredient['ingredientId']) {
+  const res = await axios.delete<Res<boolean>>(`ingredient/${id}`);
+  return res.data.data;
+}
+
 export const useIngredients = () => {
   const query = useQuery({
     queryKey: ['ingredients'],

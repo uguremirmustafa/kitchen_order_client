@@ -32,7 +32,7 @@ const TextField = forwardRef<HTMLInputElement, IProps>((props, ref) => {
         value={value}
         ref={ref}
         id={name}
-        className="input input-bordered input-primary w-full"
+        className="input input-bordered border-2 input-primary w-full"
       />
       {error ? <span>{error.message}</span> : ''}
     </FormControl>
