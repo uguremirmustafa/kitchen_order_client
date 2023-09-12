@@ -12,21 +12,36 @@ import {
   SaveIngredientFormValues,
   deleteIngredient,
   useIngredients,
+  useIngredientsUnderCategory,
 } from 'lib/api/ingredients.api';
 import { Ingredient } from 'lib/types';
-import { UseFormReturn } from 'react-hook-form';
+import { UseFormReturn, useForm } from 'react-hook-form';
 import useIngredientColumns from './useIngredientColumns';
 import TableAtom from 'components/ui/atoms/Table';
+import { useFoodCategories } from 'lib/api/food-category.api';
+import { useParams } from 'react-router-dom';
+const DEFAULT_VALUES = { name: '', brand: { value: -1, label: '' } };
 
-interface IProps {
-  form: UseFormReturn<SaveIngredientFormValues, any, undefined>;
-}
+function IngredientsTable() {
+  const params = useParams();
 
-function IngredientsTable(props: IProps) {
-  const { form } = props;
+  const form = useForm<SaveIngredientFormValues>({
+    defaultValues: DEFAULT_VALUES,
+    mode: 'all',
+  });
+
+  function openRecipeFormModal() {
+    form.reset(DEFAULT_VALUES);
+    setModal({
+      id: 'ingredient_form_modal',
+      title: 'New Ingredient',
+      content: <IngredientForm form={form} />,
+    });
+  }
 
   const queryClient = useQueryClient();
-  const { data, isLoading } = useIngredients();
+
+  const { data, isLoading } = useIngredientsUnderCategory(Number(params.categoryId));
 
   const { setModal, closeModal } = useModal();
 
@@ -72,14 +87,17 @@ function IngredientsTable(props: IProps) {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    enableFilters: false,
   });
 
   if (isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>;
   }
-  return <TableAtom table={table} />;
+  return (
+    <div>
+      <TableAtom table={table} />
+    </div>
+  );
 }
 
 export default IngredientsTable;

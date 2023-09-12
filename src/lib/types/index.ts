@@ -45,8 +45,20 @@ export interface Ingredient {
   ingredientId: number;
   ingredientName: string;
 }
+export interface IngredientWithCategory extends Ingredient {
+  categoryName: string;
+  categoryId: number;
+  image: string;
+}
 
 export interface Unit {
   id: number;
   name: string;
+}
+
+export interface FoodCategory {
+  id: number;
+  name: string;
+  image?: string;
+  description?: string;
 }

@@ -9,7 +9,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   {
     label: 'Ingredients',
-    path: '/ingredients',
+    path: '/ingredients/1',
   },
   {
     label: 'Brands',

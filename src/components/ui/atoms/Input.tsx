@@ -7,7 +7,7 @@ interface IProps extends React.HTMLProps<HTMLInputElement> {
   label?: string;
 }
 
-const TextField = forwardRef<HTMLInputElement, IProps>((props, ref) => {
+const Input = forwardRef<HTMLInputElement, IProps>((props, ref) => {
   const { error, name, label, className, value, onChange, type, ...nativeInputElementProps } =
     props;
   return (
@@ -32,11 +32,11 @@ const TextField = forwardRef<HTMLInputElement, IProps>((props, ref) => {
         value={value}
         ref={ref}
         id={name}
-        className="input input-bordered border-2 input-primary w-full"
+        className="input input-bordered input-primary border-2 w-full"
       />
       {error ? <span>{error.message}</span> : ''}
     </FormControl>
   );
 });
 
-export default TextField;
+export default Input;

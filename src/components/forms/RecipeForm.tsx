@@ -4,7 +4,7 @@ import Form from 'components/ui/atoms/Form';
 import RemoveButton from 'components/ui/atoms/RemoveButton';
 import SaveButton from 'components/ui/atoms/SaveButton';
 import SelectField from 'components/ui/atoms/SelectField';
-import TextField from 'components/ui/atoms/TextField';
+import Input from 'components/ui/atoms/Input';
 import Textarea from 'components/ui/atoms/Textarea';
 import { useModal } from 'components/wrappers/modal-wrapper';
 import { useIngredients } from 'lib/api/ingredients.api';
@@ -79,7 +79,7 @@ function RecipeForm(props: IProps) {
       <Controller
         name="name"
         control={control}
-        render={({ field }) => <TextField {...field} label="Recipe Name" error={errors?.name} />}
+        render={({ field }) => <Input {...field} label="Recipe Name" error={errors?.name} />}
         rules={{ required: true }}
       />
 
@@ -102,7 +102,7 @@ function RecipeForm(props: IProps) {
               name={`ingredients.${index}.amount`}
               control={control}
               render={({ field }) => (
-                <TextField {...field} type="number" label="Amount" className="col-span-2" />
+                <Input {...field} type="number" label="Amount" className="col-span-2" />
               )}
               rules={{ min: 0 }}
             />

@@ -14,14 +14,13 @@ import IngredientsPage from 'pages/ingredients/ingredients-page';
 import RecipesPage from 'pages/recipes/recipes-page';
 import { Page } from 'lib/types';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import IngredientCards from 'pages/ingredients/ingredient-cards';
 
 function App() {
   return (
     <QueryWrapper>
       <AuthWrapper>
         <ThemeProvider defaultTheme="dark">
-
-
           <Routes>
             <Route path="/" element={<MainLayout />}>
               {PAGES.map((p) => (
@@ -31,6 +30,16 @@ function App() {
                   element={<RequireAuth>{p.component}</RequireAuth>}
                 />
               ))}
+              <Route
+                path="ingredients"
+                element={
+                  <RequireAuth>
+                    <IngredientsPage />
+                  </RequireAuth>
+                }
+              >
+                <Route path=":categoryId" element={<IngredientCards />} />
+              </Route>
               <Route path="*" element={<FallbackPage />} />
             </Route>
             <Route path="/auth" element={<AuthLayout />}>
@@ -49,7 +58,7 @@ export default App;
 
 const PAGES: Page[] = [
   { path: '/', component: <HomePage /> },
-  { path: 'ingredients', component: <IngredientsPage /> },
+  // { path: 'ingredients', component: <IngredientsPage /> },
   { path: 'recipes', component: <RecipesPage /> },
   { path: 'brands', component: <BrandsPage /> },
   { path: 'profile', component: <ProfilePage /> },

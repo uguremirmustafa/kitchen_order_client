@@ -55,7 +55,7 @@ export default function DefaultNavbar() {
         </div>
         <div className="navbar-center">
           <Link to="/" className="btn btn-ghost normal-case text-xl">
-            Kitchenaro
+            Kitchen Master
           </Link>
         </div>
         <div className="navbar-end">
