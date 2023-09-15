@@ -8,8 +8,12 @@ function Modal() {
     return null;
   }
   return (
-    <dialog open={!!modal.id} className="modal items-start pt-20">
-      <div className="modal-box p-0 drop-shadow-2xl border-2 border-primary w-full md:min-w-[600px]">
+    <dialog open={!!modal.id} className="modal items-start pt-20 px-20">
+      <div
+        className={`modal-box p-0 drop-shadow-2xl border-2 border-primary w-full ${
+          modal?.size ? `max-w-[${modal.size}]` : 'max-w-6xl'
+        } `}
+      >
         <form method="dialog">
           <button
             className="btn btn-sm btn-circle btn-ghost absolute right-4 top-3"

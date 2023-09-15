@@ -4,15 +4,11 @@ export interface MenuItem {
 }
 export const MENU_ITEMS: MenuItem[] = [
   {
-    label: 'Recipes',
+    label: 'My Recipes',
     path: '/recipes',
   },
   {
     label: 'Ingredients',
     path: '/ingredients/1',
-  },
-  {
-    label: 'Brands',
-    path: '/brands',
   },
 ];

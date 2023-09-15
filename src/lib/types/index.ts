@@ -22,13 +22,14 @@ export interface Recipe {
   id: number;
   name: string;
   description?: string;
+  image?: string;
+  prep_time?: number;
+  cooking_time?: number;
+  for_x_person?: number;
   created_at: Date;
   updated_at: Date;
 }
-export type RecipeWithIngredients = {
-  id: Recipe['id'];
-  name: Recipe['name'];
-  description: Recipe['description'];
+export type RecipeWithIngredients = Recipe & {
   ingredients: {
     unit: Unit['name'];
     amount: number;

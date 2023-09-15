@@ -7,7 +7,15 @@ import RecipeForm from 'components/forms/RecipeForm';
 import { Recipe } from 'lib/types';
 import { useEffect, useState } from 'react';
 
-const DEFAULT_VALUES = { name: '', description: '', ingredients: [] };
+const DEFAULT_VALUES: SaveRecipeFormValues = {
+  name: '',
+  description: '',
+  ingredients: [] as SaveRecipeFormValues['ingredients'],
+  cooking_time: 20,
+  for_x_person: 2,
+  image: '',
+  prep_time: 20,
+};
 
 function RecipesPage(): JSX.Element {
   const { data: recipes, isLoading, isError } = useRecipes();
@@ -40,14 +48,14 @@ function RecipesPage(): JSX.Element {
 
   useEffect(() => {
     if (recipe) {
+      const ingredients = recipe.ingredients.map((x) => ({
+        amount: x.amount,
+        item: { label: x.ingredientName, value: x.ingredient_id },
+        unit: { label: x.unit, value: x.unit_id },
+      }));
       form.reset({
-        name: recipe.name,
-        description: recipe.description,
-        ingredients: recipe.ingredients.map((x) => ({
-          amount: x.amount,
-          item: { label: x.ingredientName, value: x.ingredient_id },
-          unit: { label: x.unit, value: x.unit_id },
-        })),
+        ...recipe,
+        ingredients,
       });
       setModal({
         id: 'recipe_form_modal',
@@ -74,7 +82,7 @@ function RecipesPage(): JSX.Element {
           New Recipe
         </AddButton>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-12 gap-4">
         {recipes.map((x) => (
           <RecipeCard key={x.id} recipe={x} onClick={onRecipeSelect} />
         ))}

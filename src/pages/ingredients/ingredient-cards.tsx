@@ -9,7 +9,6 @@ import { DEFAULT_VALUES } from './ingredients-page';
 import { IngredientWithCategory } from 'lib/types';
 import { useModal } from 'components/wrappers/modal-wrapper';
 import IngredientForm from 'components/forms/IngredientForm';
-import { FaEdit, FaTimes } from 'react-icons/fa';
 import ConfirmButton from 'components/ui/atoms/ConfirmButton';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CancelButton from 'components/ui/atoms/CancelButton';
@@ -77,17 +76,24 @@ function IngredientCards(): JSX.Element {
             key={x.ingredientId}
             className="col-span-6 lg:col-span-4 xl:col-span-3 card card-compact bg-base-300"
           >
-            <figure>
-              <img src={x.image ?? '/images/shoe.jpg'} alt="Shoes" />
+            <figure className="bg-white">
+              <img
+                src={x.image ?? '/images/shoe.jpg'}
+                alt="Shoes"
+                className="h-60 object-cover w-full"
+              />
             </figure>
             <div className="card-body">
               <h2 className="card-title">{x.ingredientName}</h2>
-              <p>{x.brandName}</p>
+              {/* <p>{x.brandName}</p> */}
               <div className="card-actions justify-end">
                 <button className="btn btn-sm btn-ghost" onClick={() => deleteItem(x)}>
                   delete
                 </button>
-                <button className="btn btn-sm btn-success btn-outline" onClick={() => openModal(x)}>
+                <button
+                  className="btn btn-sm btn-success btn-outline border-none"
+                  onClick={() => openModal(x)}
+                >
                   edit
                 </button>
               </div>

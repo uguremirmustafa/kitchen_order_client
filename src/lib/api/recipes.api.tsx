@@ -23,9 +23,13 @@ async function getUnits() {
   return res.data.data ?? [];
 }
 export interface SaveRecipeFormValues {
-  ingredients: { item: SelectOption; unit: SelectOption; amount: number }[];
+  ingredients: { item: SelectOption<number>; unit: SelectOption<number>; amount: number }[];
   name: string;
   description: string;
+  image: string;
+  for_x_person: number;
+  prep_time: number;
+  cooking_time: number;
 }
 
 type SaveRecipeBody = Omit<SaveRecipeFormValues, 'ingredients'> & {
@@ -37,16 +41,16 @@ type SaveRecipeBody = Omit<SaveRecipeFormValues, 'ingredients'> & {
 };
 
 function getSaveRecipeBody(data: SaveRecipeFormValues): SaveRecipeBody {
+  const ingredients = data.ingredients
+    .filter((x) => x.amount && x.item.value && x.unit.value)
+    .map((x) => ({
+      amount: x.amount,
+      ingredient_id: x.item.value as number,
+      unit_id: x.unit.value as number,
+    }));
   return {
-    name: data.name,
-    description: data.description,
-    ingredients: data.ingredients
-      .filter((x) => x.amount && x.item.value && x.unit.value)
-      .map((x) => ({
-        amount: x.amount,
-        ingredient_id: x.item.value as number,
-        unit_id: x.unit.value as number,
-      })),
+    ...data,
+    ingredients,
   };
 }
 export async function saveRecipe({ data, id }: { data: SaveRecipeFormValues; id?: Recipe['id'] }) {

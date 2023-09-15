@@ -16,6 +16,14 @@ async function login(params: LoginParams) {
     console.log('error', error);
   }
 }
+export async function register(params: LoginParams) {
+  try {
+    const { data } = await axios.post<Res<User>>('auth/register', params);
+    return data;
+  } catch (error) {
+    console.log('error', error);
+  }
+}
 async function logout() {
   try {
     const { data } = await axios.post<Res<boolean>>('auth/logout');

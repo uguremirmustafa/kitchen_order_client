@@ -9,12 +9,12 @@ import ProfilePage from 'pages/auth/profile-page';
 import RegisterPage from 'pages/auth/register-page';
 import FallbackPage from 'pages/fallback/fallback-page';
 import HomePage from 'pages/home/home-page';
-import BrandsPage from 'pages/ingredients/brands-page';
 import IngredientsPage from 'pages/ingredients/ingredients-page';
 import RecipesPage from 'pages/recipes/recipes-page';
 import { Page } from 'lib/types';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import IngredientCards from 'pages/ingredients/ingredient-cards';
+import RecipeDetailsPage from 'pages/recipes/recipe-details-page';
 
 function App() {
   return (
@@ -40,6 +40,25 @@ function App() {
               >
                 <Route path=":categoryId" element={<IngredientCards />} />
               </Route>
+              <Route
+                path="recipes"
+                element={
+                  <RequireAuth>
+                    <RecipesPage />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="recipes/:recipeId"
+                element={
+                  <RequireAuth>
+                    <RecipeDetailsPage />
+                  </RequireAuth>
+                }
+              >
+                <Route path="edit" element={<div>edit</div>} />
+              </Route>
+
               <Route path="*" element={<FallbackPage />} />
             </Route>
             <Route path="/auth" element={<AuthLayout />}>
@@ -59,7 +78,6 @@ export default App;
 const PAGES: Page[] = [
   { path: '/', component: <HomePage /> },
   // { path: 'ingredients', component: <IngredientsPage /> },
-  { path: 'recipes', component: <RecipesPage /> },
-  { path: 'brands', component: <BrandsPage /> },
+  // { path: 'recipes', component: <RecipesPage /> },
   { path: 'profile', component: <ProfilePage /> },
 ];

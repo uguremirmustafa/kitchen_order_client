@@ -5,12 +5,15 @@ const axios = _axios.create({
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 });
+
+const unauthPages = ['/auth/register', '/auth/login'];
+
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
       localStorage.removeItem('auth-user');
-      if (window.location.pathname !== '/auth/login') {
+      if (!unauthPages.includes(window.location.pathname)) {
         window.location.href = '/auth/login';
       }
     }

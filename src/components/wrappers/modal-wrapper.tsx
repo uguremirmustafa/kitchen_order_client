@@ -6,6 +6,7 @@ type ModalProps = {
   content: ReactNode;
   id: ModalId;
   onClose?: (p?: any) => void;
+  size?: number;
 };
 
 type InitialState = {

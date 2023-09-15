@@ -54,7 +54,7 @@ function IngredientsPage(): JSX.Element {
         <AddButton disabled={!currentCategory} onClick={() => openModal()} className="w-full">
           New Ingredient
         </AddButton>
-        <div className="card bg-base-300 h-full image-full mt-4">
+        <div className="card bg-base-300 h-80 image-full mt-4">
           <figure>
             <img src={currentCategory?.image ?? '/images/shoe.jpg'} alt="Shoes" />
           </figure>

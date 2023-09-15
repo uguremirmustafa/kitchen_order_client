@@ -57,7 +57,6 @@ function IngredientForm(props: IProps) {
   });
 
   async function onSubmit(data: SaveIngredientFormValues) {
-    console.log(data);
     if (id) {
       mutation.mutate({ data, id });
     } else {

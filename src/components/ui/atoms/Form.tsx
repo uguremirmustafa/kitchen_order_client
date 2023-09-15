@@ -7,7 +7,7 @@ interface IProps extends React.FormHTMLAttributes<HTMLFormElement> {
 function Form(props: IProps) {
   const { children, ...nativeProps } = props;
   return (
-    <form {...nativeProps} className={`flex flex-col gap-2 max-w-sm ${nativeProps.className}`}>
+    <form {...nativeProps} className={`flex flex-col gap-2 ${nativeProps.className}`}>
       {children}
     </form>
   );
