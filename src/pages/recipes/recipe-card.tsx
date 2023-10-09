@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CancelButton from 'components/ui/atoms/CancelButton';
 import ConfirmButton from 'components/ui/atoms/ConfirmButton';
-import RemoveButton from 'components/ui/atoms/RemoveButton';
 import { useModal } from 'components/wrappers/modal-wrapper';
 import { deleteRecipeById } from 'lib/api/recipes.api';
 import { Recipe } from 'lib/types';
@@ -35,12 +34,15 @@ function RecipeCard(props: IProps) {
     setModal({
       id: 'confirmation_modal',
       title: 'Confirm delete?',
+      size: 400,
       content: (
         <div>
           <p>Would you like to delete this recipe?</p>
+          <p>{recipe.name}</p>
           <div className="modal-action">
-            <CancelButton onClick={() => closeModal()} />
+            <CancelButton onClick={() => closeModal()} className="btn-sm" />
             <ConfirmButton
+              className="btn-sm"
               loading={mutation.isLoading}
               onClick={() => mutation.mutate(recipe.id)}
             />

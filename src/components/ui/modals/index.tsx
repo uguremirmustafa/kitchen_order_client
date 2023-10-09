@@ -8,7 +8,10 @@ function Modal() {
     return null;
   }
   return (
-    <dialog open={!!modal.id} className="modal items-start pt-20 px-20">
+    <dialog
+      open={!!modal.id}
+      className="modal overflow-hidden bg-neutral-800/80 items-start p-2 md:pt-10 md:px-10"
+    >
       <div
         className={`modal-box p-0 drop-shadow-2xl border-2 border-primary w-full ${
           modal?.size ? `max-w-[${modal.size}]` : 'max-w-6xl'
@@ -27,6 +30,9 @@ function Modal() {
         </h3>
         <div className="p-4">{modal.content}</div>
       </div>
+      <form method="dialog" className="modal-backdrop">
+        <button onClick={() => closeModal()}>close</button>
+      </form>
     </dialog>
   );
 }

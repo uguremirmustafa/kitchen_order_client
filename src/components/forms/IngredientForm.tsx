@@ -4,7 +4,6 @@ import SaveButton from 'components/ui/atoms/SaveButton';
 import SelectField from 'components/ui/atoms/SelectField';
 import Input from 'components/ui/atoms/Input';
 import { useModal } from 'components/wrappers/modal-wrapper';
-import { useBrandNames } from 'lib/api/brands.api';
 import { useFoodCategories } from 'lib/api/food-category.api';
 import { SaveIngredientFormValues, saveIngredient } from 'lib/api/ingredients.api';
 import { Ingredient } from 'lib/types';
@@ -13,15 +12,11 @@ import ImageUploader from 'components/ui/atoms/ImageUploader';
 
 interface IProps {
   form: UseFormReturn<SaveIngredientFormValues, any, undefined>;
-  id?: Ingredient['ingredientId'];
+  id?: Ingredient['id'];
 }
 function IngredientForm(props: IProps) {
   const { form, id } = props;
-  const {
-    data: brands,
-    isLoading: loadingForBrandNames,
-    isError: errorForBrandNames,
-  } = useBrandNames();
+
   const {
     data: categories,
     isLoading: loadingForCategories,
@@ -64,56 +59,52 @@ function IngredientForm(props: IProps) {
     }
   }
 
-  if (loadingForBrandNames || loadingForCategories) {
+  if (loadingForCategories) {
     return <span className="loading loading-spinner loading-lg"></span>;
   }
-  if (errorForBrandNames || errorCategories) {
+  if (errorCategories) {
     return <span>error</span>;
   }
 
-  const brandOptions = brands.map((x) => ({ value: x.id, label: x.name }));
   const categoryOptions = categories.map((x) => ({ value: x.id, label: x.name }));
 
   return (
-    <Form className="!max-w-6xl w-full" onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        control={control}
-        name="imageUrl"
-        render={({ field }) => (
-          <ImageUploader
-            {...field}
-            label="Image"
-            imageUrl={watch('imageUrl')}
-            setImageUrl={(url: string) => setValue('imageUrl', url)}
-          />
-        )}
-      />
-
-      <Controller
-        name="name"
-        control={control}
-        render={({ field }) => <Input {...field} label="Name" error={errors?.name} />}
-        rules={{ required: true }}
-      />
-      <Controller
-        name="brand"
-        control={control}
-        render={({ field }) => (
-          <SelectField label="Brand" options={brandOptions} className="col-span-5" {...field} />
-        )}
-      />
-      <Controller
-        name="category"
-        control={control}
-        render={({ field }) => (
-          <SelectField
-            label="Category"
-            options={categoryOptions}
-            className="col-span-5"
-            {...field}
-          />
-        )}
-      />
+    <Form className="grid grid-cols-2 gap-4 w-full" onSubmit={handleSubmit(onSubmit)}>
+      <div className="col-span-2 md:col-span-1">
+        <Controller
+          control={control}
+          name="imageUrl"
+          render={({ field }) => (
+            <ImageUploader
+              {...field}
+              label="Image"
+              imageClass="h-auto md:h-[400px] !object-contain"
+              imageUrl={watch('imageUrl')}
+              setImageUrl={(url: string) => setValue('imageUrl', url)}
+            />
+          )}
+        />
+      </div>
+      <div className="col-span-2 md:col-span-1">
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => <Input {...field} label="Name" error={errors?.name} />}
+          rules={{ required: true }}
+        />
+        <Controller
+          name="category"
+          control={control}
+          render={({ field }) => (
+            <SelectField
+              label="Category"
+              options={categoryOptions}
+              className="col-span-5"
+              {...field}
+            />
+          )}
+        />
+      </div>
       <SaveButton
         className="col-span-2"
         loading={false}

@@ -26,7 +26,6 @@ function IngredientCards(): JSX.Element {
   function openModal(x: IngredientWithCategory) {
     form.reset({
       category: { value: x.categoryId, label: x.categoryName },
-      brand: { value: x.brandId, label: x.brandName },
       name: x.ingredientName,
       imageUrl: x.image ?? '',
     });
@@ -85,7 +84,6 @@ function IngredientCards(): JSX.Element {
             </figure>
             <div className="card-body">
               <h2 className="card-title">{x.ingredientName}</h2>
-              {/* <p>{x.brandName}</p> */}
               <div className="card-actions justify-end">
                 <button className="btn btn-sm btn-ghost" onClick={() => deleteItem(x)}>
                   delete

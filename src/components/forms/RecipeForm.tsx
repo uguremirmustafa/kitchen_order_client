@@ -12,6 +12,9 @@ import { SaveRecipeFormValues, saveRecipe, useUnits } from 'lib/api/recipes.api'
 import { Recipe } from 'lib/types';
 import { useFieldArray, Controller, UseFormReturn } from 'react-hook-form';
 import ImageUploader from 'components/ui/atoms/ImageUploader';
+import { useState } from 'react';
+import { useDebounce } from 'lib/hooks/useDebounce';
+import { InputActionMeta } from 'react-select';
 
 interface IProps {
   form: UseFormReturn<SaveRecipeFormValues, any, undefined>;
@@ -21,11 +24,24 @@ function RecipeForm(props: IProps) {
   const { form, recipeId } = props;
   const { data: units, isLoading: loadingUnits, error: errorUnits } = useUnits();
   const { closeModal } = useModal();
+  const [searchKey, setSearchKey] = useState('');
+  const debouncedSearch = useDebounce(searchKey, 500);
+  const handleInputChange = (inputText: string, meta: InputActionMeta) => {
+    if (meta.action !== 'input-blur' && meta.action !== 'menu-close') {
+      setSearchKey(inputText);
+    }
+  };
+  const noOptionsMessage = (obj: { inputValue: string }) => {
+    if (obj.inputValue.trim().length === 0) {
+      return null;
+    }
+    return 'No matching ingredients';
+  };
   const {
     data: ingredients,
     isLoading: loadingIngredients,
     error: errorIngredients,
-  } = useIngredients();
+  } = useIngredients(debouncedSearch);
 
   const {
     reset,
@@ -73,21 +89,20 @@ function RecipeForm(props: IProps) {
     return <span>error</span>;
   }
 
-  const ingredientOptions =
-    ingredients?.map((x) => ({ label: x.ingredientName, value: x.ingredientId })) ?? [];
+  const ingredientOptions = ingredients?.map((x) => ({ label: x.name, value: x.id })) ?? [];
 
-  const unitOptions = units?.map((x) => ({ label: x.name, value: x.id })) ?? [];
+  const unitOptions = units?.map((x) => ({ label: x.code, value: x.id })) ?? [];
   return (
     <Form className="w-full" onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full grid grid-cols-12 gap-4">
-        <div className="col-span-6">
+        <div className="col-span-5">
           <Controller
             name="name"
             control={control}
             render={({ field }) => <Input {...field} label="Recipe Name" error={errors?.name} />}
             rules={{ required: true }}
           />
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-x-4">
             <Controller
               name="for_x_person"
               control={control}
@@ -133,7 +148,7 @@ function RecipeForm(props: IProps) {
             )}
           />
         </div>
-        <div className="col-span-6">
+        <div className="col-span-7">
           {fields.map((field, index) => {
             return (
               <div key={field.id} className="grid grid-cols-12 gap-4 items-end">
@@ -142,9 +157,15 @@ function RecipeForm(props: IProps) {
                   control={control}
                   render={({ field }) => (
                     <SelectField
+                      id={`ingredients.${index}.item`}
                       label="Item"
                       options={ingredientOptions}
                       className="col-span-5"
+                      onInputChange={handleInputChange}
+                      filterOption={null}
+                      inputValue={searchKey}
+                      noOptionsMessage={noOptionsMessage}
+                      isLoading={!!searchKey}
                       {...field}
                     />
                   )}

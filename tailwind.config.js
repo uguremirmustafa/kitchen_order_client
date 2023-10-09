@@ -13,18 +13,19 @@ module.exports = {
   // eslint-disable-next-line no-undef
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
-    themes: [
-      {
-        dark: {
-          // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
-          ...require('daisyui/src/theming/themes')['[data-theme=dark]'],
-          primary: '#a5747f',
-          '.btn': {
-            animation: 'none',
-          },
-        },
-      },
-    ], // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
+    // themes: [
+    //   {
+    //     dark: {
+    //       // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
+    //       ...require('daisyui/src/theming/themes')['[data-theme=dark]'],
+    //       primary: '#a5747f',
+    //       '.btn': {
+    //         animation: 'none',
+    //       },
+    //     },
+    //   },
+    // ],
+    theme: false, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: 'dark', // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components

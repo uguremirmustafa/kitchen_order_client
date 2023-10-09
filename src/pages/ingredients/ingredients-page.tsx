@@ -74,7 +74,6 @@ export default IngredientsPage;
 
 export const DEFAULT_VALUES = {
   name: '',
-  brand: { value: -1, label: '' },
   category: { value: -1, label: '' },
   image: undefined,
 };

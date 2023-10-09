@@ -8,11 +8,21 @@ interface IProps extends React.HTMLProps<HTMLInputElement> {
   label?: string;
   setImageUrl: (s: string) => void;
   imageUrl: string;
+  imageClass?: string;
 }
 
 const ImageUploader = forwardRef<HTMLInputElement, IProps>((props, ref) => {
-  const { error, name, label, className, type, setImageUrl, imageUrl, ...nativeInputElementProps } =
-    props;
+  const {
+    error,
+    name,
+    label,
+    className,
+    type,
+    setImageUrl,
+    imageUrl,
+    imageClass,
+    ...nativeInputElementProps
+  } = props;
 
   const [loading, setLoading] = useState(false);
 
@@ -73,7 +83,11 @@ const ImageUploader = forwardRef<HTMLInputElement, IProps>((props, ref) => {
       />
       {error ? <span>{error.message}</span> : ''}
       {imageUrl && (
-        <img src={imageUrl} alt="Preview" className="h-52 object-cover rounded-lg mt-4" />
+        <img
+          src={imageUrl}
+          alt="Preview"
+          className={`h-52 object-cover rounded-lg mt-4 ${imageClass ?? ''}`}
+        />
       )}
       {loading && <span className="loading loading-spinner loading-lg"></span>}
     </FormControl>

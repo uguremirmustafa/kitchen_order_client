@@ -19,8 +19,8 @@ export async function deleteRecipeById(id: Recipe['id']) {
 }
 
 async function getUnits() {
-  const res = await axios<Res<Unit[]>>('unit');
-  return res.data.data ?? [];
+  const res = await axios<Unit[]>('unit');
+  return res.data ?? [];
 }
 export interface SaveRecipeFormValues {
   ingredients: { item: SelectOption<number>; unit: SelectOption<number>; amount: number }[];

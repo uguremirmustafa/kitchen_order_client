@@ -20,7 +20,7 @@ import useIngredientColumns from './useIngredientColumns';
 import TableAtom from 'components/ui/atoms/Table';
 import { useFoodCategories } from 'lib/api/food-category.api';
 import { useParams } from 'react-router-dom';
-const DEFAULT_VALUES = { name: '', brand: { value: -1, label: '' } };
+const DEFAULT_VALUES = { name: '' };
 
 function IngredientsTable() {
   const params = useParams();
@@ -46,7 +46,7 @@ function IngredientsTable() {
   const { setModal, closeModal } = useModal();
 
   function handleEdit(row: Ingredient) {
-    form.reset({ name: row.ingredientName, brand: { value: row.brandId, label: row.brandName } });
+    form.reset({ name: row.ingredientName });
     setModal({
       id: 'ingredient_form_modal',
       title: 'edit ingredient',

@@ -3,34 +3,31 @@ import { SelectOption } from 'components/ui/atoms/SelectField';
 import { Ingredient, IngredientWithCategory, Res } from 'lib/types';
 import axios from 'lib/utils/axios';
 
-async function getIngredients() {
-  const res = await axios<Res<Ingredient[]>>('ingredient');
-  return res.data.data ?? [];
+async function getIngredients(search: string) {
+  const res = await axios<Ingredient[]>(`ingredient?q=${search}`);
+  return res.data ?? [];
 }
 
 async function getIngredientsUnderCategory(categoryId: number) {
-  const res = await axios<Res<IngredientWithCategory[]>>(`ingredient/${categoryId}`);
-  return res.data.data ?? [];
+  const res = await axios<IngredientWithCategory[]>(`ingredient/${categoryId}`);
+  return res.data ?? [];
 }
 
-async function getIngredientById(id: Ingredient['ingredientId']) {
+async function getIngredientById(id: Ingredient['id']) {
   const res = await axios<Res<Ingredient>>(`ingredient/${id}`);
   return res.data.data;
 }
 export interface SaveIngredientFormValues {
   name: string;
-  brand: SelectOption<number>;
   category: SelectOption<number>;
   imageUrl: string;
 }
 type SaveIngredientBody = {
   name: string;
-  brand_id: number;
   food_category_id: number;
   image: string;
 };
 type SaveIngredientResponse = Res<{
-  brand_id: number;
   created_at: string;
   description: null | string;
   food_category_id: number;
@@ -45,11 +42,10 @@ export async function saveIngredient({
   id,
 }: {
   data: SaveIngredientFormValues;
-  id?: Ingredient['ingredientId'];
+  id?: Ingredient['id'];
 }) {
   const body: SaveIngredientBody = {
     name: data.name,
-    brand_id: data.brand.value,
     food_category_id: data.category.value,
     image: data.imageUrl,
   };
@@ -62,15 +58,15 @@ export async function saveIngredient({
   return res.data.data;
 }
 
-export async function deleteIngredient(id: Ingredient['ingredientId']) {
+export async function deleteIngredient(id: Ingredient['id']) {
   const res = await axios.delete<Res<boolean>>(`ingredient/${id}`);
   return res.data.data;
 }
 
-export const useIngredients = () => {
+export const useIngredients = (search: string) => {
   const query = useQuery({
-    queryKey: ['ingredients'],
-    queryFn: getIngredients,
+    queryKey: search ? ['ingredient', search] : ['ingredient'],
+    queryFn: async () => await getIngredients(search),
     initialData: [] as Ingredient[],
   });
   return query;

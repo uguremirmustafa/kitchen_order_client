@@ -10,7 +10,7 @@ export interface LoginParams {
 
 async function login(params: LoginParams) {
   try {
-    const { data } = await axios.post<Res<User>>('auth/login', params);
+    const { data } = await axios.post<User>('auth/login', params);
     return data;
   } catch (error) {
     console.log('error', error);
@@ -49,8 +49,8 @@ export const useLogin = (setUser: React.Dispatch<React.SetStateAction<User | nul
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (res) => {
-      if (res?.data) {
-        setUser(res?.data ?? null);
+      if (res) {
+        setUser(res ?? null);
         navigate(from, { replace: true });
       }
     },

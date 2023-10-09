@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html,
+  body {
+    scrollbar-gutter: stable;
+  }
   * {
     @apply font-semibold;
   }

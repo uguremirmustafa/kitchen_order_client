@@ -9,10 +9,7 @@ export interface User {
   lastName: null | string;
   email: string;
 }
-export interface BrandWithName {
-  name: string;
-  id: number;
-}
+
 export interface Page {
   path: string;
   component: JSX.Element;
@@ -31,20 +28,17 @@ export interface Recipe {
 }
 export type RecipeWithIngredients = Recipe & {
   ingredients: {
-    unit: Unit['name'];
+    unit: Unit['code'];
     amount: number;
     unit_id: Unit['id'];
-    brandName: BrandWithName['name'];
-    ingredient_id: Ingredient['ingredientId'];
-    ingredientName: Ingredient['ingredientName'];
+    ingredient_id: Ingredient['id'];
+    ingredientName: Ingredient['name'];
   }[];
 };
 
 export interface Ingredient {
-  brandName: string;
-  brandId: number;
-  ingredientId: number;
-  ingredientName: string;
+  id: number;
+  name: string;
 }
 export interface IngredientWithCategory extends Ingredient {
   categoryName: string;
@@ -54,7 +48,7 @@ export interface IngredientWithCategory extends Ingredient {
 
 export interface Unit {
   id: number;
-  name: string;
+  code: string;
 }
 
 export interface FoodCategory {

@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Ingredient } from 'lib/types';
 import { useMemo } from 'react';
-import { PiDotsThreeCircleBold, PiDotsThreeOutlineVerticalBold } from 'react-icons/pi';
+import { PiDotsThreeOutlineVerticalBold } from 'react-icons/pi';
 
 interface IProps {
   handleEdit: (item: Ingredient) => void;
@@ -16,12 +16,9 @@ function useIngredientColumns(props: IProps) {
         accessorFn: (s) => s.ingredientName,
         header: 'Name',
       },
+
       {
-        accessorFn: (s) => s.brandName,
-        header: 'Brand',
-      },
-      {
-        accessorFn: (s) => s.brandName,
+        accessorFn: (s) => s.ingredientId,
         header: 'Action',
         cell: ({ row }) => (
           <div className="dropdown dropdown-right dropdown-hover">
